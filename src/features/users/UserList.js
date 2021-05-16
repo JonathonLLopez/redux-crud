@@ -1,4 +1,10 @@
+import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
+import { fetchUsers, userDeleted } from "./usersSlice";
+
 export function UserList() {
+  const { entities } = useSelector((state) => state.users);
+
   return (
     <div className="container">
       <div className="row">
@@ -13,7 +19,7 @@ export function UserList() {
         </div>
       </div>
       <div className="row">
-        <table class="u-full-width">
+        <table className="u-full-width">
           <thead>
             <tr>
               <th>ID</th>
@@ -23,6 +29,19 @@ export function UserList() {
             </tr>
           </thead>
           <tbody>
+            {entities.map(({id, name, email}, i) => (              
+              <tr key={i}>
+                <td>{id}</td>
+                <td>{name}</td>
+                <td>{email}</td>
+                <td>
+                  <button>Delete</button>
+                  <Link to={`/edit-user/${id}`}>
+                    <button>Edit</button>
+                  </Link>
+                </td>
+              </tr>
+            ))}
             <tr>
               <td>1</td>
               <td>Dave Gamache</td>
